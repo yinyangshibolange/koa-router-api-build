@@ -24,7 +24,8 @@
     // "noFallthroughCasesInSwitch": false
   },
   "exclude":[
-    "./node_modules"
+    "./node_modules",
+    "./api"
   ],
   "ts-node": {
     "esm": true

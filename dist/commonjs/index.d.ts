@@ -1,5 +1,7 @@
 import { type RouterContext } from "koa-router";
 interface Api {
+    import: string;
+    importType: string;
     index: string;
     method: string;
     handler: (ctx: RouterContext) => {};
@@ -7,8 +9,9 @@ interface Api {
 export declare class ApiBuild {
     apiRoot: string;
     base: string;
+    apiExt: string[];
     apis: Api[];
-    constructor(apiRoot: string, base?: string);
+    constructor(apiRoot: string, base?: string, apiExt?: string[] | string);
     genApis(): Promise<void>;
     readApis(dir?: string): Promise<any[]>;
 }

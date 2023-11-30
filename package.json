@@ -2,16 +2,31 @@
   "name": "koa-router-api-build",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/module/index.js",
   "type": "module",
   "bin": {
-    "api-gen": "bin/gen.js"
+    "api-gen": "dist/commonjs/bin/gen.js",
+    "api-gen-es": "dist/module/bin/gen.js"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": {
+        "types": "./dist/module/index.d.ts",
+        "default": "./dist/module/index.js"
+      },
+      "require": {
+        "types": "./dist/commonjs/index.d.ts",
+        "default": "./dist/commonjs/index.js"
+      }
+    }
   },
   "scripts": {
     "build": "rimraf dist && npm run build:cjs && npm run build:es",
     "build:cjs": "tsc --declaration --module commonjs --moduleResolution Node --outDir  dist/commonjs",
     "build:es": "tsc --declaration --module NodeNext --outDir  dist/module",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ts-node ./test/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -21,5 +36,12 @@
     "@types/yargs": "^17.0.32",
     "rimraf": "^5.0.5",
     "yargs": "^17.7.2"
+  },
+  "files": [
+    "dist/"
+  ],
+  "dependencies": {
+    "@prisma/client": "^5.6.0",
+    "koa-router": "^12.0.1"
   }
 }
