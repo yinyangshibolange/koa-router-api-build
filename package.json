@@ -1,0 +1,25 @@
+{
+  "name": "koa-router-api-build",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "bin": {
+    "api-gen": "bin/gen.js"
+  },
+  "scripts": {
+    "build": "rimraf dist && npm run build:cjs && npm run build:es",
+    "build:cjs": "tsc --declaration --module commonjs --moduleResolution Node --outDir  dist/commonjs",
+    "build:es": "tsc --declaration --module NodeNext --outDir  dist/module",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^20.10.1",
+    "@types/yargs": "^17.0.32",
+    "rimraf": "^5.0.5",
+    "yargs": "^17.7.2"
+  }
+}
