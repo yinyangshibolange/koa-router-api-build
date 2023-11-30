@@ -128,8 +128,3 @@ class ApiBuild {
     }
 }
 exports.ApiBuild = ApiBuild;
-const apiBuild = new ApiBuild(path_1.default.resolve(process.cwd(), "./api"));
-apiBuild.genApis()
-    .then(r => {
-    console.log(apiBuild.apis);
-});

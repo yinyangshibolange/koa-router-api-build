@@ -98,8 +98,3 @@ export class ApiBuild {
         });
     }
 }
-const apiBuild = new ApiBuild(path.resolve(process.cwd(), "./api"));
-apiBuild.genApis()
-    .then(r => {
-    console.log(apiBuild.apis);
-});
