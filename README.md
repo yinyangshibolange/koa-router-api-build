@@ -11,6 +11,11 @@
 // genkey.js
 import {ApiBuild} from "koa-router-api-build"
 import path from "path"
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 async function genRouters () {
  const root = path.resolve(__dirname, "./api")
@@ -20,4 +25,5 @@ async function genRouters () {
  return ab.apis
 }
 
+genRouters ()
 ```
