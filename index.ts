@@ -1,17 +1,14 @@
 import fs from "fs"
 import path from "path"
 import { type RouterContext } from "koa-router"
+import type { Spec } from "koa-joi-router"
 
 function isArrayEmpty(arr) {
  return !(Array.isArray(arr) && arr.length > 0)
 }
-
-interface Api {
+interface Api extends Spec{
  import: string;
  importType: string;
- index: string;
- method: string;
- handler: (ctx: RouterContext) => {}
 }
 
 export class ApiBuild {
@@ -58,7 +55,7 @@ export class ApiBuild {
       this.apis.push({
        import: (dir ? (dir + '/') : '') + files[k],
        importType: 'array',
-       index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
+       path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
        method: handler.method || "get",
        handler: handler.handler || function (ctx: RouterContext) { },
        ...handler,
@@ -68,7 +65,7 @@ export class ApiBuild {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
       importType: 'object',
-      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
+      path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: indexDataDefault.method || "get",
       handler: indexDataDefault.handler || function (ctx: RouterContext) { },
       ...indexDataDefault,
@@ -77,7 +74,7 @@ export class ApiBuild {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
       importType: 'function',
-      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
+      path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: "get",
       handler: indexDataDefault || function (ctx: RouterContext) { },
 
@@ -86,7 +83,7 @@ export class ApiBuild {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
       importType: '{method, handler}',
-      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
+      path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: indexData.method || "get",
       handler: indexData.handler || function (ctx: RouterContext) { },
       ...indexData,

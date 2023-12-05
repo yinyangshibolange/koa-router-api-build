@@ -1,10 +1,7 @@
-import { type RouterContext } from "koa-router";
-interface Api {
+import type { Spec } from "koa-joi-router";
+interface Api extends Spec {
     import: string;
     importType: string;
-    index: string;
-    method: string;
-    handler: (ctx: RouterContext) => {};
 }
 export declare class ApiBuild {
     apiRoot: string;

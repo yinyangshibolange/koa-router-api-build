@@ -55,23 +55,23 @@ export class ApiBuild {
                     const indexDataDefault = indexData.default;
                     if (Array.isArray(indexDataDefault)) {
                         indexDataDefault.forEach(handler => {
-                            this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: 'array', index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: handler.method || "get", handler: handler.handler || function (ctx) { } }, handler));
+                            this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: 'array', path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: handler.method || "get", handler: handler.handler || function (ctx) { } }, handler));
                         });
                     }
                     else if (typeof indexDataDefault === 'object') {
-                        this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: 'object', index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: indexDataDefault.method || "get", handler: indexDataDefault.handler || function (ctx) { } }, indexDataDefault));
+                        this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: 'object', path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: indexDataDefault.method || "get", handler: indexDataDefault.handler || function (ctx) { } }, indexDataDefault));
                     }
                     else if (typeof indexDataDefault === 'function') {
                         this.apis.push({
                             import: (dir ? (dir + '/') : '') + files[k],
                             importType: 'function',
-                            index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
+                            path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
                             method: "get",
                             handler: indexDataDefault || function (ctx) { },
                         });
                     }
                     else if (!indexDataDefault && indexData.handler) {
-                        this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: '{method, handler}', index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: indexData.method || "get", handler: indexData.handler || function (ctx) { } }, indexData));
+                        this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: '{method, handler}', path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: indexData.method || "get", handler: indexData.handler || function (ctx) { } }, indexData));
                     }
                 }
                 else if (stat.isDirectory()) {
