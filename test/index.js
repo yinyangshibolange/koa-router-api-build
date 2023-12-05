@@ -1,7 +1,8 @@
-import {ApiBuild} from "../dist/module/index.js"
+import {ApiBuild} from "../index.ts"
 import path from "path"
 const ab = new ApiBuild(path.resolve(process.cwd(), "api"))
 
-ab.genApis(r => {
- console.log(ab.apis)
-})
+ab.genApis()
+ .then(apis => {
+  console.log(apis)
+ })

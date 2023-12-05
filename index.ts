@@ -37,6 +37,7 @@ export class ApiBuild {
  async genApis() {
   this.apis = []
   await this.readApis()
+  return this.apis
  }
 
  async readApis(dir = '') {
@@ -57,34 +58,38 @@ export class ApiBuild {
       this.apis.push({
        import: (dir ? (dir + '/') : '') + files[k],
        importType: 'array',
-       index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + files[k],
+       index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
        method: handler.method || "get",
-       handler: handler.handler || function (ctx: RouterContext) { }
+       handler: handler.handler || function (ctx: RouterContext) { },
+       ...handler,
       })
      })
     } else if (typeof indexDataDefault === 'object') {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
       importType: 'object',
-      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + files[k],
+      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: indexDataDefault.method || "get",
-      handler: indexDataDefault.handler || function (ctx: RouterContext) { }
+      handler: indexDataDefault.handler || function (ctx: RouterContext) { },
+      ...indexDataDefault,
      })
     }  else if (typeof indexDataDefault === 'function') {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
       importType: 'function',
-      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + files[k],
+      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: "get",
-      handler: indexDataDefault || function (ctx: RouterContext) { }
+      handler: indexDataDefault || function (ctx: RouterContext) { },
+
      })
     } else if(!indexDataDefault && indexData.handler) {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
       importType: '{method, handler}',
-      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + files[k],
+      index: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: indexData.method || "get",
-      handler: indexData.handler || function (ctx: RouterContext) { }
+      handler: indexData.handler || function (ctx: RouterContext) { },
+      ...indexData,
      })
     }
    } else if (stat.isDirectory()) {

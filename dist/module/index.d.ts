@@ -12,7 +12,7 @@ export declare class ApiBuild {
     apiExt: string[];
     apis: Api[];
     constructor(apiRoot: string, base?: string, apiExt?: string[] | string);
-    genApis(): Promise<void>;
+    genApis(): Promise<Api[]>;
     readApis(dir?: string): Promise<any[]>;
 }
 export {};
