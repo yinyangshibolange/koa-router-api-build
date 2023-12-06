@@ -12,6 +12,8 @@ interface Api extends KoaJoiRouter.Spec {
  import: string;
  importType: string;
  meta?: any;
+ whites?: string | string[];
+ [key: string]: any;
 }
 
 export class ApiBuild {
