@@ -9,6 +9,7 @@ function isArrayEmpty(arr) {
 interface Api extends Spec{
  import: string;
  importType: string;
+ meta?: any;
 }
 
 export class ApiBuild {

@@ -2,6 +2,7 @@ import type { Spec } from "koa-joi-router";
 interface Api extends Spec {
     import: string;
     importType: string;
+    meta?: any;
 }
 export declare class ApiBuild {
     apiRoot: string;
