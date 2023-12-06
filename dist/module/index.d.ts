@@ -1,5 +1,6 @@
-import type { Spec } from "koa-joi-router";
-interface Api extends Spec {
+import * as KoaJoiRouter from "koa-joi-router";
+declare module "koa-joi-router" { }
+interface Api extends KoaJoiRouter.Spec {
     import: string;
     importType: string;
     meta?: any;

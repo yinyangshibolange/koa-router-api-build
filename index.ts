@@ -1,12 +1,14 @@
 import fs from "fs"
 import path from "path"
 import { type RouterContext } from "koa-router"
-import type { Spec } from "koa-joi-router"
+import * as KoaJoiRouter from "koa-joi-router";
+
+declare module "koa-joi-router" {}
 
 function isArrayEmpty(arr) {
  return !(Array.isArray(arr) && arr.length > 0)
 }
-interface Api extends Spec{
+interface Api extends KoaJoiRouter.Spec {
  import: string;
  importType: string;
  meta?: any;
