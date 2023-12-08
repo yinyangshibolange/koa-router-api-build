@@ -141,7 +141,7 @@ export function genApisFile() {
    }
  
    function startGen() {
-     const apiBuild = new ApiBuild(root, argv.base)
+     const apiBuild = new ApiBuild(root)
      apiBuild.genApis()
      .then(async apis => {
        let fileString = `import Router from "koa-joi-router"\n`
