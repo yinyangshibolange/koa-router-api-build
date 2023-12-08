@@ -182,7 +182,7 @@ export function genApisFile() {
          } else if(typeof item.module === 'function'){
            routers.push(genRouter({
             path: item.path,
-             handler: item
+             handler: item.module
            }))
          } else  {
            if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
