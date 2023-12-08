@@ -71,7 +71,7 @@ export class ApiBuild {
                         });
                     }
                     else if (!indexDataDefault && indexData.handler) {
-                        this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: '{method, handler}', path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: indexData.method || "get", handler: indexData.handler || function (ctx) { } }, indexData));
+                        this.apis.push(Object.assign({ import: (dir ? (dir + '/') : '') + files[k], importType: '*', path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name, method: indexData.method || "get", handler: indexData.handler || function (ctx) { } }, indexData));
                     }
                 }
                 else if (stat.isDirectory()) {

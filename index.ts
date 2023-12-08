@@ -87,7 +87,7 @@ export class ApiBuild {
     } else if(!indexDataDefault && indexData.handler) {
      this.apis.push({
       import: (dir ? (dir + '/') : '') + files[k],
-      importType: '{method, handler}',
+      importType: '*',
       path: (this.base ? ('/' + this.base) : '') + `/` + (dir ? (dir + '/') : '') + path.parse(files[k]).name,
       method: indexData.method || "get",
       handler: indexData.handler || function (ctx: RouterContext) { },

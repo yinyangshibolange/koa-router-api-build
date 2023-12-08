@@ -1,6 +1,6 @@
 {
   "name": "koa-router-api-build",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
@@ -30,17 +30,16 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "@types/koa-joi-router": "^8.0.7",
-    "@types/koa-router": "^7.4.8",
-    "@types/node": "^20.10.1",
-    "@types/yargs": "^17.0.32",
-    "yargs": "^17.7.2"
-  },
   "files": [
     "dist/"
   ],
   "dependencies": {
+    "@types/koa-joi-router": "^8.0.7",
+    "@types/koa-router": "^7.4.8",
+    "@types/node": "^20.10.1",
+    "@types/yargs": "^17.0.32",
+    "yargs": "^17.7.2",
+    "commander": "^11.1.0",
     "koa-router": "^12.0.1",
     "rimraf": "^5.0.5"
   }
