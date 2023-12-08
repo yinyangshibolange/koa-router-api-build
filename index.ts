@@ -201,22 +201,25 @@ export function genApisFile() {
                authWhiteList.push(item.path)
               }
              routers.push(genRouter({
+              path: item.path,
+              method: 'get',
               ...item1,
-              path: item.path
              }))
            })
          } else if(typeof item.module === 'function'){
            routers.push(genRouter({
             path: item.path,
-             handler: item.module
+             handler: item.module,
+             method: 'get'
            }))
          } else  {
            if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
              authWhiteList.push(item.path)
             }
            routers.push(genRouter({
+            path: item.path,
+            method: 'get',
             ...item.module,
-            path: item.path
            }))
          }
  
