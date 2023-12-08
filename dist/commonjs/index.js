@@ -113,13 +113,13 @@ class ApiBuild {
 exports.ApiBuild = ApiBuild;
 function genApisFile() {
     const cmdLine = process.argv.join(" ");
-    const apiPath = cmdLine.match(/--path\s(\w+)/) ? cmdLine.match(/--path\s(\S+)/)[1] : "";
+    const apiPath = cmdLine.match(/--path\s(\w+)/) ? cmdLine.match(/--path\s(\S+)/)[1] : "api";
     const base = cmdLine.match(/--base\s(\w+)/) ? cmdLine.match(/--base\s(\S+)/)[1] : "";
     const watch = cmdLine.match(/--watch\s(\w+)/) ? cmdLine.match(/--watch\s(\S+)/)[1] : "";
-    const out = cmdLine.match(/--out\s(\w+)/) ? cmdLine.match(/--out\s(\S+)/)[1] : "out.js";
+    const out = cmdLine.match(/--out\s(\w+)/) ? cmdLine.match(/--out\s(\S+)/)[1] : (path_1.default.parse(apiPath).dir ? (path_1.default.parse(apiPath).dir + '/' + "out.js") : "out.js");
     const isWatch = cmdLine.indexOf("--watch") > -1;
     const argvs = {
-        path: apiPath || "api",
+        path: apiPath,
         base,
         watch,
         out,
@@ -149,7 +149,7 @@ function genApisFile() {
                 let fileString = `import Router from "koa-joi-router"\n`;
                 apis.forEach(api => {
                     const moduleName = api.path.replace(/\.\w+$/, '').replace(/\//g, '_');
-                    const dir = apisPath.replace(new RegExp(`^${path_1.default.parse(argv.out).dir}`), "");
+                    const dir = apisPath.replace(new RegExp(`^${path_1.default.parse(argv.out).dir}`), "").substring(1);
                     if (api.importType === 'object') {
                         fileString += `import ${moduleName} from "./${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
