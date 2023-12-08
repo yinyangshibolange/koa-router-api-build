@@ -16,4 +16,5 @@ export declare class ApiBuild {
     genApis(): Promise<Api[]>;
     readApis(dir?: string): Promise<any[]>;
 }
+export declare function genApisFile(): void;
 export {};
