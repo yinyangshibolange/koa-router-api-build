@@ -119,23 +119,28 @@ export function genApisFile() {
                 let fileString = `import Router from "koa-joi-router"\n`;
                 apis.forEach(api => {
                     const moduleName = api.path.replace(/\.\w+$/, '').replace(/\//g, '_');
-                    const dir = apisPath.replace(new RegExp(`^${path.parse(argv.out).dir}`), "").substring(1);
+                    const dir = apisPath.replace(new RegExp(`^${path.parse(argv.out).dir}`), "");
                     if (api.importType === 'object') {
-                        fileString += `import ${moduleName} from "./${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                     else if (api.importType === '*') {
-                        fileString += `import * as ${moduleName} from "./${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import * as ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                     else if (api.importType === 'array') {
-                        fileString += `import ${moduleName} from "./${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                     else if (api.importType === 'function') {
-                        fileString += `import ${moduleName} from "./${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                 });
                 fileString += '\n\n';
                 fileString += `
-         const files = [${apis.map(api => api.path.replace(/\.\w+$/, '').replace(/\//g, '_')).join(",")}]
+         const files = [${apis.map(api => {
+                    return `{
+            path: "${api.path.replace(/\.\w+$/, '')}",
+            module:  ${api.path.replace(/\.\w+$/, '').replace(/\//g, '_')}
+          }`;
+                }).join(",")}]
        export  let routers = []
        export let authWhiteList = []
        function genRouter(item) {
@@ -164,22 +169,29 @@ export function genApisFile() {
          return router
        }
        files.forEach((item${fileType === 'ts' ? ': any' : ''}) => {
-         if(Array.isArray(item)) {
-           item.forEach(item => {
-             if ((Array.isArray(item.whites) && item.whites.includes("auth")) || (typeof item.whites === 'string' && item.whites=== 'auth')) {
+         if(Array.isArray(item.module)) {
+           item.module.forEach(item1 => {
+             if ((Array.isArray(item1.whites) && item1.whites.includes("auth")) || (typeof item1.whites === 'string' && item1.whites=== 'auth')) {
                authWhiteList.push(item.path)
               }
-             routers.push(genRouter(item))
+             routers.push(genRouter({
+              ...item1,
+              path: item.path
+             }))
            })
-         } else if(typeof item === 'function'){
+         } else if(typeof item.module === 'function'){
            routers.push(genRouter({
+            path: item.path,
              handler: item
            }))
          } else  {
-           if ((Array.isArray(item.whites) && item.whites.includes("auth")) || (typeof item.whites === 'string' && item.whites=== 'auth')) {
+           if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
              authWhiteList.push(item.path)
             }
-           routers.push(genRouter(item))
+           routers.push(genRouter({
+            ...item.module,
+            path: item.path
+           }))
          }
  
     
