@@ -121,16 +121,16 @@ export function genApisFile() {
                     const moduleName = api.path.replace(/\.\w+$/, '').replace(/\//g, '_');
                     const dir = apisPath.replace(new RegExp(`^${path.parse(argv.out).dir}`), "");
                     if (api.importType === 'object') {
-                        fileString += `import ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import ${moduleName} from ".${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                     else if (api.importType === '*') {
-                        fileString += `import * as ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import * as ${moduleName} from ".${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                     else if (api.importType === 'array') {
-                        fileString += `import ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import ${moduleName} from ".${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                     else if (api.importType === 'function') {
-                        fileString += `import ${moduleName} from ".${dir ? `/${dir}` : ''}/${api.import.replace(/\.ts$/, '.js')}"\n`;
+                        fileString += `import ${moduleName} from ".${dir}/${api.import.replace(/\.ts$/, '.js')}"\n`;
                     }
                 });
                 fileString += '\n\n';
