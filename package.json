@@ -1,6 +1,6 @@
 {
   "name": "koa-router-api-build",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
@@ -8,6 +8,10 @@
   "bin": {
     "api-gen": "dist/commonjs/bin/gen.js",
     "api-gen-es": "dist/module/bin/gen.js"
+  },
+   "repository": {
+    "type": "git",
+    "url": "https://github.com/yinyangshibolange/koa-router-api-build"
   },
   "exports": {
     "./package.json": "./package.json",
