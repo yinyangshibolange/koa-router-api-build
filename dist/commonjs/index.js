@@ -174,6 +174,7 @@ function genApisFile() {
        export  let routers = []
        export let routerParams = []
        export let authWhiteList = []
+       export let permissionWhiteList = []
        function genRouterParams(item) {
          const router = Router()
          const params = {
@@ -205,7 +206,12 @@ function genApisFile() {
              if ((Array.isArray(item1.whites) && item1.whites.includes("auth")) || (typeof item1.whites === 'string' && item1.whites=== 'auth')) {
                authWhiteList.push(item.path)
               }
-
+              if (
+                (Array.isArray(item1.whites) && item1.whites.includes("permission")) ||
+                (typeof item1.whites === "string" && item1.whites === "permission")
+              ) {
+                permissionWhiteList.push(item.path);
+              }
               const param = {
                 path: item.path,
                 method: 'get',
@@ -225,6 +231,13 @@ function genApisFile() {
          } else  {
            if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
              authWhiteList.push(item.path)
+            }
+            if (
+              (Array.isArray(item.module.whites) &&
+                item.module.whites.includes("permission")) ||
+              (typeof item.module.whites === "string" && item.module.whites === "permission")
+            ) {
+              permissionWhiteList.push(item.path);
             }
             const param = {
               path: item.path,
