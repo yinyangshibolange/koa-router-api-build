@@ -168,10 +168,11 @@ export function genApisFile() {
           }`
          }).join(",")}]
        export  let routers = []
+       export let routerParams = []
        export let authWhiteList = []
-       function genRouter(item) {
+       function genRouterParams(item) {
          const router = Router()
-         router.route({
+         const params = {
           meta: item.meta,
           method: item.method,
           path: item.path,
@@ -191,8 +192,8 @@ export function genApisFile() {
            }
           },
           handler: item.handler
-         });
-         return router
+         }
+         return params
        }
        files.forEach((item${fileType==='ts'?': any': ''}) => {
          if(Array.isArray(item.module)) {
@@ -200,30 +201,34 @@ export function genApisFile() {
              if ((Array.isArray(item1.whites) && item1.whites.includes("auth")) || (typeof item1.whites === 'string' && item1.whites=== 'auth')) {
                authWhiteList.push(item.path)
               }
-             routers.push(genRouter({
-              path: item.path,
-              method: 'get',
-              ...item1,
-             }))
+              const param = genRouterParams({
+                path: item.path,
+                method: 'get',
+                ...item1,
+               })
+              routerParams.push(param)
+             routers.push(Router(param))
            })
          } else if(typeof item.module === 'function'){
-           routers.push(genRouter({
+          const param = genRouterParams({
             path: item.path,
              handler: item.module,
              method: 'get'
-           }))
+           }) 
+           routerParams.push(param)
+          routers.push(Router(param))
          } else  {
            if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
              authWhiteList.push(item.path)
             }
-           routers.push(genRouter({
-            path: item.path,
-            method: 'get',
-            ...item.module,
-           }))
+            const param = genRouterParams({
+              path: item.path,
+              method: 'get',
+              ...item.module,
+             }) 
+           routerParams.push(param)
+          routers.push(Router(param))
          }
- 
-    
    })
          `
        try {
