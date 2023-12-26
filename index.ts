@@ -201,33 +201,34 @@ export function genApisFile() {
              if ((Array.isArray(item1.whites) && item1.whites.includes("auth")) || (typeof item1.whites === 'string' && item1.whites=== 'auth')) {
                authWhiteList.push(item.path)
               }
-              const param = genRouterParams({
+
+              const param = {
                 path: item.path,
                 method: 'get',
                 ...item1,
-               })
+               }
               routerParams.push(param)
-             routers.push(Router().route(param))
+             routers.push(Router().route(genRouterParams(param)))
            })
          } else if(typeof item.module === 'function'){
-          const param = genRouterParams({
+          const param = {
             path: item.path,
              handler: item.module,
              method: 'get'
-           }) 
+           }
            routerParams.push(param)
-          routers.push(Router().route(param))
+          routers.push(Router().route(genRouterParams(param)))
          } else  {
            if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
              authWhiteList.push(item.path)
             }
-            const param = genRouterParams({
+            const param = {
               path: item.path,
               method: 'get',
               ...item.module,
-             }) 
+             }
            routerParams.push(param)
-          routers.push(Router().route(param))
+          routers.push(Router().route(genRouterParams(param)))
          }
    })
          `
