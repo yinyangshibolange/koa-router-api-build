@@ -181,7 +181,7 @@ export function genApisFile() {
                 ...item1,
                })
               routerParams.push(param)
-             routers.push(Router(param))
+             routers.push(Router().route(param))
            })
          } else if(typeof item.module === 'function'){
           const param = genRouterParams({
@@ -190,7 +190,7 @@ export function genApisFile() {
              method: 'get'
            }) 
            routerParams.push(param)
-          routers.push(Router(param))
+          routers.push(Router().route(param))
          } else  {
            if ((Array.isArray(item.module.whites) && item.module.whites.includes("auth")) || (typeof item.module.whites === 'string' && item.module.whites=== 'auth')) {
              authWhiteList.push(item.path)
@@ -201,7 +201,7 @@ export function genApisFile() {
               ...item.module,
              }) 
            routerParams.push(param)
-          routers.push(Router(param))
+          routers.push(Router().route(param))
          }
    })
          `;
