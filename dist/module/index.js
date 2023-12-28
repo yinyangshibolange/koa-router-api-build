@@ -273,7 +273,13 @@ export function genApisFile() {
                 if (argv.isJson) {
                     try {
                         yield fs.promises.writeFile(path.resolve(path.parse(outJsPath).dir, argv.json || "apis.json"), JSON.stringify(apis.map((item) => {
-                            return Object.assign(Object.assign({}, item), { handler: undefined });
+                            return {
+                                import: item.import,
+                                importType: item.importType,
+                                path: item.path,
+                                method: item.method,
+                                meta: item.meta,
+                            };
                         })));
                         console.log("json生成成功");
                     }

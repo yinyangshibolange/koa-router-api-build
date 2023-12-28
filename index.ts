@@ -327,8 +327,11 @@ export function genApisFile() {
               JSON.stringify(
                 apis.map((item) => {
                   return {
-                    ...item,
-                    handler: undefined,
+                    import: item.import,
+                    importType: item.importType,
+                    path: item.path,
+                    method: item.method,
+                    meta: item.meta,
                   };
                 })
               )
