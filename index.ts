@@ -212,15 +212,15 @@ export function genApisFile() {
           }
         });
 
-        fileString += `
-       import { dirname } from "node:path"
-      import { fileURLToPath } from "node:url"
-      import fs from "fs"
-      import path from "path"
+        //   fileString += `
+        //  import { dirname } from "node:path"
+        // import { fileURLToPath } from "node:url"
+        // import fs from "fs"
+        // import path from "path"
 
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = dirname(__filename);
-       `;
+        // const __filename = fileURLToPath(import.meta.url);
+        // const __dirname = dirname(__filename);
+        //  `;
         fileString += `
          const files = [${apis
            .map((api) => {
@@ -313,24 +313,30 @@ export function genApisFile() {
  
          `;
 
-        if (argv.isJson) {
-          fileString += `
-          fs.promises.writeFile(path.resolve(__dirname, "${argv.json || 'apis.json'}"), JSON.stringify(routerParams.map(item => {
-            return {
-              ...item,
-              validate: undefined
-            }
-          })))
-          `;
-        }
+        const outJsPath = path.resolve(process.cwd(), argv.out);
         try {
-          await fs.promises.writeFile(
-            path.resolve(process.cwd(), argv.out),
-            fileString
-          );
-          console.log("生成成功");
+          await fs.promises.writeFile(outJsPath, fileString);
+          console.log("js生成成功");
         } catch (err) {
           console.error(err);
+        }
+        if (argv.isJson) {
+          try {
+             await fs.promises.writeFile(
+              path.resolve(path.parse(outJsPath).dir, argv.json || "apis.json"),
+              JSON.stringify(
+                apis.map((item) => {
+                  return {
+                    ...item,
+                    handler: undefined,
+                  };
+                })
+              )
+            );
+            console.log("json生成成功");
+          } catch (err) {
+            console.error(err);
+          }
         }
       });
     }

@@ -193,15 +193,14 @@ function genApisFile() {
                         fileString += `import ${moduleName} from ".${dir}/${api.import.replace(/\.ts$/, ".js")}"\n`;
                     }
                 });
-                fileString += `
-       import { dirname } from "node:path"
-      import { fileURLToPath } from "node:url"
-      import fs from "fs"
-      import path from "path"
-
-      const __filename = fileURLToPath(import.meta.url);
-      const __dirname = dirname(__filename);
-       `;
+                //   fileString += `
+                //  import { dirname } from "node:path"
+                // import { fileURLToPath } from "node:url"
+                // import fs from "fs"
+                // import path from "path"
+                // const __filename = fileURLToPath(import.meta.url);
+                // const __dirname = dirname(__filename);
+                //  `;
                 fileString += `
          const files = [${apis
                     .map((api) => {
@@ -293,22 +292,24 @@ function genApisFile() {
 
  
          `;
-                if (argv.isJson) {
-                    fileString += `
-          fs.promises.writeFile(path.resolve(__dirname, "${argv.json || 'apis.json'}"), JSON.stringify(routerParams.map(item => {
-            return {
-              ...item,
-              validate: undefined
-            }
-          })))
-          `;
-                }
+                const outJsPath = path_1.default.resolve(process.cwd(), argv.out);
                 try {
-                    yield fs_1.default.promises.writeFile(path_1.default.resolve(process.cwd(), argv.out), fileString);
-                    console.log("生成成功");
+                    yield fs_1.default.promises.writeFile(outJsPath, fileString);
+                    console.log("js生成成功");
                 }
                 catch (err) {
                     console.error(err);
+                }
+                if (argv.isJson) {
+                    try {
+                        yield fs_1.default.promises.writeFile(path_1.default.resolve(path_1.default.parse(outJsPath).dir, argv.json || "apis.json"), JSON.stringify(apis.map((item) => {
+                            return Object.assign(Object.assign({}, item), { handler: undefined });
+                        })));
+                        console.log("json生成成功");
+                    }
+                    catch (err) {
+                        console.error(err);
+                    }
                 }
             }));
         }
