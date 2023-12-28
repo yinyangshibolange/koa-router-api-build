@@ -295,7 +295,7 @@ function genApisFile() {
          `;
                 if (argv.isJson) {
                     fileString += `
-          fs.promises.writeFile(path.resolve(__dirname, ${argv.json || 'apis.json'}), JSON.stringify(routerParams.map(item => {
+          fs.promises.writeFile(path.resolve(__dirname, "${argv.json || 'apis.json'}"), JSON.stringify(routerParams.map(item => {
             return {
               ...item,
               validate: undefined
