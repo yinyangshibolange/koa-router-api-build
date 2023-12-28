@@ -309,6 +309,7 @@ function genApisFile() {
                                 path: item.path,
                                 method: item.method,
                                 meta: item.meta,
+                                whites: item.whites
                             };
                         })));
                         console.log("json生成成功");
