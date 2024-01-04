@@ -1,13 +1,15 @@
 {
   "name": "koa-router-api-build",
-  "version": "1.1.20",
+  "version": "1.1.21",
   "description": "",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
   "type": "module",
   "bin": {
     "api-gen": "dist/commonjs/bin/gen.js",
-    "api-gen-es": "dist/module/bin/gen.js"
+    "api-gen-es": "dist/module/bin/gen.js",
+    "genapim": "dist/commonjs/bin/genapi.js",
+    "genapim-es": "dist/module/bin/genapi.js"
   },
   "repository": {
     "type": "git",
