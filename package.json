@@ -1,6 +1,6 @@
 {
   "name": "koa-router-api-build",
-  "version": "1.1.21",
+  "version": "1.2.1",
   "description": "",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
@@ -32,7 +32,8 @@
     "build": "rimraf dist && npm run build:cjs && npm run build:es",
     "build:cjs": "tsc --declaration --module commonjs --moduleResolution Node --outDir  dist/commonjs",
     "build:es": "tsc --declaration --module NodeNext --outDir  dist/module",
-    "test": "ts-node ./test/index.js"
+    "test": "ts-node ./test/index.js",
+    "genapim": "ts-node ./bin/genapi.ts --path api --name demo"
   },
   "author": "",
   "license": "ISC",

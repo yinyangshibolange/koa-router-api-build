@@ -317,8 +317,13 @@ export async function handler(ctx) {
  `
 }, ]
 async function buildModule(dirPath, fileStrs) {
- const stat = await fs.promises.stat(dirPath)
- if(!stat.isDirectory()) {
+ let stat
+try {
+  stat = await fs.promises.stat(dirPath)
+} catch(err) {
+ console.log(err)
+}
+ if(!stat || !stat.isDirectory()) {
   await fs.promises.mkdir(dirPath)
  }
  for(let item of fileStrs) {
