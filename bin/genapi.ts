@@ -14,9 +14,10 @@ const root = path.resolve(process.cwd(), apiPath);
 
 const dirPath = path.resolve(root, name);
 
-const fileStrs = [{
- fileName: 'add.ts',
- fileStr: `
+const fileStrs = [
+  {
+    fileName: "add.ts",
+    fileStr: `
  import { PrismaClient } from '@prisma/client';
 import { Codes, Messages } from '../../config/codes.js';
 import Joi from 'joi'
@@ -75,10 +76,11 @@ export  async function handler(ctx) {
   
 }  
 
- `
-}, {
- fileName: 'delete.ts',
- fileStr: `
+ `,
+  },
+  {
+    fileName: "delete.ts",
+    fileStr: `
  import { PrismaClient } from '@prisma/client';
 import { Codes, Messages } from '../../config/codes.js';
 import Joi from 'joi'
@@ -133,10 +135,11 @@ export async function handler(ctx) {
 
 }  
 
- `
-}, {
- fileName: 'get.ts',
- fileStr: `
+ `,
+  },
+  {
+    fileName: "get.ts",
+    fileStr: `
  import { PrismaClient } from '@prisma/client';
 import { Codes, Messages } from '../../config/codes.js';
 import { ${name} } from '../../schema/${name}.js';
@@ -182,10 +185,11 @@ export async function handler(ctx) {
     }
   }
 }
- `
-}, {
- fileName: 'page.ts',
- fileStr: `
+ `,
+  },
+  {
+    fileName: "page.ts",
+    fileStr: `
  import { PrismaClient } from '@prisma/client';
 import { Codes, Messages } from '../../config/codes.js';
 import { ${name} } from '../../schema/${name}.js';
@@ -250,10 +254,11 @@ export async function handler(ctx: Context) {
   }
  }
 }
- `
-}, {
- fileName: 'put.ts',
- fileStr: `
+ `,
+  },
+  {
+    fileName: "put.ts",
+    fileStr: `
  import { PrismaClient } from '@prisma/client';
 import { Codes, Messages } from '../../config/codes.js';
 import Joi from 'joi'
@@ -314,22 +319,24 @@ export async function handler(ctx) {
 
 }  
 
- `
-}, ]
+ `,
+  },
+];
 async function buildModule(dirPath, fileStrs) {
- let stat
-try {
-  stat = await fs.promises.stat(dirPath)
-} catch(err) {
- console.log(err)
-}
- if(!stat || !stat.isDirectory()) {
-  await fs.promises.mkdir(dirPath)
- }
- for(let item of fileStrs) {
-  const {fileName,fileStr} = item
-  fs.promises.writeFile(path.resolve(dirPath, fileName), fileStr)
- }
+  let stat;
+  try {
+    stat = await fs.promises.stat(dirPath);
+  } catch (err) {
+    console.log(err);
+  }
+  if (!stat || !stat.isDirectory()) {
+    await fs.promises.mkdir(dirPath);
+  }
+  for (let item of fileStrs) {
+    const { fileName, fileStr } = item;
+    console.log(path.resolve(dirPath, fileName))
+    await fs.promises.writeFile(path.resolve(dirPath, fileName), fileStr);
+  }
 }
 
-buildModule(dirPath, fileStrs)
+buildModule(dirPath, fileStrs);
